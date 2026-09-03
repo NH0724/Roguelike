@@ -11,10 +11,16 @@ impl Player {
 
     fn heal(&mut self, amount: i32) {
         self.hp = self.hp + amount;
+        if self.hp >= 100 {
+            self.hp = 100
+        }
     }
 
     fn damage(&mut self, amount: i32) {
         self.hp = self.hp - amount;
+        if self.hp <= 0 {
+            self.hp = 0
+        }
     }
 }
 
@@ -24,7 +30,7 @@ fn main() {
         "Player {}, positiion:({},{}) and HP is {}",
         player.name, player.x, player.y, player.hp
     );
-    player.heal(20);
+    player.heal(50);
     println!(
         "Player {}, positiion:({},{}) and HP is {}",
         player.name, player.x, player.y, player.hp
