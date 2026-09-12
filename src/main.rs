@@ -1,3 +1,11 @@
+const MAP_WIDTH: i32 = 10;
+const MAP_HEIGHT: i32 = 10;
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
 struct Player {
     name: String,
     x: i32,
@@ -22,10 +30,45 @@ impl Player {
             self.hp = 0
         }
     }
+    fn move_player(&mut self, direction: &Direction) {
+        match direction {
+            Direction::Up => {
+                if self.y > 0 {
+                    self.y = self.y - 1;
+                } else {
+                    self.y = 0;
+                }
+            }
+            Direction::Down => {
+                if self.y < MAP_HEIGHT - 1 {
+                    self.y = self.y + 1;
+                } else {
+                    self.y = MAP_HEIGHT - 1;
+                }
+            }
+            Direction::Left => {
+                if self.x > 0 {
+                    self.x = self.x - 1;
+                } else {
+                    self.x = 0;
+                }
+            }
+            Direction::Right => {
+                if self.x < MAP_WIDTH - 1 {
+                    self.x = self.x + 1;
+                } else {
+                    self.x = MAP_WIDTH - 1;
+                }
+            }
+        }
+    }
 }
 
 fn main() {
     let mut player = Player::new("Tom".to_string(), 2, 3, 80);
+    player.move_player(&Direction::Down);
+    player.move_player(&Direction::Left);
+    player.move_player(&Direction::Left);
     println!(
         "Player {}, positiion:({},{}) and HP is {}",
         player.name, player.x, player.y, player.hp
