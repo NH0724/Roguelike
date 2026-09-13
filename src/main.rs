@@ -1,5 +1,44 @@
 const MAP_WIDTH: i32 = 10;
 const MAP_HEIGHT: i32 = 10;
+
+enum Tile {
+    Floor,
+    Wall,
+}
+
+fn create_map() -> Vec<Vec<Tile>> {
+    let mut map: Vec<Vec<Tile>> = Vec::new();
+    for y in 0..MAP_HEIGHT {
+        let mut row: Vec<Tile> = Vec::new();
+        if y == 0 || y == MAP_HEIGHT - 1 {
+            for _ in 0..MAP_WIDTH {
+                row.push(Tile::Wall);
+            }
+        } else {
+            for x in 0..MAP_WIDTH {
+                if x == 0 || x == MAP_WIDTH - 1 {
+                    row.push(Tile::Wall);
+                } else {
+                    row.push(Tile::Floor);
+                }
+            }
+        }
+        map.push(row);
+    }
+    map
+}
+
+fn draw_map(map: &Vec<Vec<Tile>>) {
+    for row in map {
+        for tile in row {
+            match tile {
+                Tile::Wall => print!("#"),
+                Tile::Floor => print!("."),
+            }
+        }
+        println!();
+    }
+}
 enum Direction {
     Up,
     Down,
@@ -65,7 +104,7 @@ impl Player {
 }
 
 fn main() {
-    let mut player = Player::new("Tom".to_string(), 2, 3, 80);
+    let mut player = Player::new("Qian".to_string(), 2, 3, 80);
     player.move_player(&Direction::Down);
     player.move_player(&Direction::Left);
     player.move_player(&Direction::Left);
@@ -83,4 +122,6 @@ fn main() {
         "Player {}, positiion:({},{}) and HP is {}",
         player.name, player.x, player.y, player.hp
     );
+    let map = create_map();
+    draw_map(&map);
 }
